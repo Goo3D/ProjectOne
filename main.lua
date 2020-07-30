@@ -1,7 +1,7 @@
 
 
 -- Carga de modulos externos
-
+-- heinstalao Git
 push = require "push" -- Libreria para gestion de resolucion de pantalla
 
 
