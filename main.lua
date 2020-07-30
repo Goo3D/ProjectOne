@@ -6,7 +6,6 @@ push = require "push" -- Libreria para gestion de resolucion de pantalla
 
 
 
-
 -- Declaracion de variables iniciales
 
 -- Resolucion de pantalla de trabajo
@@ -34,8 +33,6 @@ function love.load()
           resizable = true,
           vsync = true
       })
-
-
 
 
 
@@ -75,10 +72,7 @@ end
 --                       UPDATE CICLE
 --
 
-
-
 function love.update(dt)
-
 
   -- Keyboard handling, called by LÖVE2D each frame;
   function love.keypressed(key)
@@ -112,15 +106,25 @@ function love.draw()
 
   love.graphics.setFont(myFont)
 
+-- Print parte entera frames/60
+  love.graphics.setColor(1, 1, 1)
   love.graphics.print(math.ceil ( fnumber / 60 ))
+
+-- Print actual frame.
   love.graphics.print(modulo, 0, 30)
+
+-- Print Mouse position on Screen
   love.graphics.print("Mouse position:" .. mouseposX .. "--" .. mouseposY, 0, 60)
 
+-- Print Score
+  love.graphics.setColor(0, 0, 1)
+  love.graphics.print(score,300,50,12)
 
+-- Print Animated Rectangle
   love.graphics.setColor(1,1,1)
   love.graphics.rectangle("fill", 100, 100, 200 + modulo , 100)
 
-
+-- Print Circle
   love.graphics.setColor(1,0,0)
   love.graphics.circle("fill", mybutton.x, mybutton.y, mybutton.size)
 
@@ -147,10 +151,18 @@ end
 -- MOUSE
 function love.mousepressed ( x, y, button, istouch)
 
-  if button == 1  then
+if button == 1  then
+    if distance (mybutton.x, mybutton.y, love.mouse.getX(), love.mouse.getY()) < mybutton.size
+    then
+    score = score + 1
+    mybutton.x = math.random(mybutton.size, love.graphics.getWidth() - mybutton.size)
+    mybutton.y = math.random(mybutton.size, love.graphics.getHeight() - mybutton.size)
+    end
+
   end
 end
 
 -- DISTANCE
 function distance (x1,y1,x2,y2)
+    return math.sqrt((y2-y1)^2 +(x2-x1)^2)
 end
